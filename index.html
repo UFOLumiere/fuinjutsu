@@ -1,1 +1,527 @@
 
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encyclopédie des Fûinjutsu</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    padding:20px;
+    font-family:Arial,sans-serif;
+    color:white;
+    background:radial-gradient(circle at top,#30204f,#090914 75%);
+    min-height:100vh;
+}
+header{text-align:center;padding:30px 15px}
+header h1{
+    color:#d6a5ff;
+    font-size:clamp(28px,5vw,46px);
+    margin-bottom:10px;
+    text-shadow:0 0 15px #8d4dcc;
+}
+header p{color:#c6b8d8;line-height:1.6}
+.container{max-width:1150px;margin:auto}
+.notice{
+    background:#211936;
+    border:1px solid #8055bd;
+    border-radius:12px;
+    padding:14px;
+    margin:20px 0;
+    color:#e1d3f2;
+    line-height:1.6;
+    font-size:14px;
+}
+.search-box{margin:20px auto;max-width:650px}
+input{
+    width:100%;
+    padding:15px;
+    border:2px solid #8055bd;
+    border-radius:12px;
+    background:#171327;
+    color:white;
+    font-size:16px;
+    outline:none;
+}
+input:focus{border-color:#d6a5ff;box-shadow:0 0 12px #8055bd}
+.filters{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:20px 0 30px;
+}
+.filters button{
+    border:1px solid #8055bd;
+    background:#211936;
+    color:white;
+    padding:10px 15px;
+    border-radius:20px;
+    cursor:pointer;
+}
+.filters button:hover,.filters button.active{
+    background:linear-gradient(90deg,#7038bb,#ad55d7);
+    border-color:#d6a5ff;
+}
+.counter{text-align:center;color:#c9b5e4;margin:15px 0 25px}
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:18px;
+}
+.card{
+    background:linear-gradient(145deg,#201936,#12101f);
+    border:1px solid #8055bd;
+    border-radius:15px;
+    padding:20px;
+    transition:.2s;
+}
+.card:hover{transform:translateY(-4px);box-shadow:0 0 18px #7040a0}
+.card h2{color:#d6a5ff;font-size:19px;margin-top:0}
+.category{
+    display:inline-block;
+    font-size:12px;
+    color:#e5caff;
+    background:#49306a;
+    padding:5px 9px;
+    border-radius:20px;
+    margin-bottom:12px;
+}
+.card p{color:#d2ccdc;line-height:1.6;font-size:14px}
+.status{
+    display:block;
+    color:#b9a0d8;
+    font-size:12px;
+    margin-top:12px;
+    border-top:1px solid #49345f;
+    padding-top:10px;
+}
+.sequence-title{
+    color:#e5caff;
+    font-size:14px;
+    font-weight:bold;
+    margin-top:17px;
+}
+.sequence{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-top:9px;
+}
+.seal{
+    background:#302047;
+    border:1px solid #8055bd;
+    border-radius:7px;
+    padding:7px 9px;
+    color:#f0e4ff;
+    font-size:12px;
+}
+.sequence-type{
+    display:inline-block;
+    margin-top:9px;
+    padding:5px 8px;
+    border-radius:6px;
+    font-size:11px;
+    font-weight:bold;
+}
+.official{background:#174b38;color:#a8f0c9}
+.invented{background:#594018;color:#ffe0a1}
+.mudra-section{
+    margin-top:45px;
+    padding:22px;
+    background:#151020;
+    border:1px solid #8055bd;
+    border-radius:15px;
+}
+.mudra-section h2{color:#d6a5ff;text-align:center}
+.mudra-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+    gap:10px;
+    margin-top:20px;
+}
+.mudra{
+    background:#211936;
+    border:1px solid #594078;
+    border-radius:10px;
+    padding:14px 8px;
+    text-align:center;
+}
+.mudra .symbol{font-size:25px}
+.mudra b{display:block;color:#e2bdff;margin:7px 0}
+.mudra small{color:#b9a0d8}
+.empty{
+    text-align:center;
+    color:#c6b8d8;
+    padding:40px 10px;
+    display:none;
+}
+footer{
+    text-align:center;
+    color:#9888aa;
+    margin:45px auto 15px;
+    font-size:13px;
+    line-height:1.7;
+}
+footer a{color:#d6a5ff}
+@media(max-width:500px){
+    body{padding:12px}
+    .card{padding:16px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Encyclopédie des Fûinjutsu</h1>
+    <p>
+        Découvrez l'art des sceaux dans Naruto et Boruto.<br>
+        Techniques de scellement, libération, emprisonnement et barrières.
+    </p>
+</header>
+
+<main class="container">
+
+    <div class="notice">
+        <strong>À propos des mudras :</strong><br>
+        Les séquences indiquées comme officielles sont celles qui sont
+        documentées dans l'œuvre ou les références de la série.
+        Les séquences marquées « inventées » sont des propositions
+        imaginaires créées pour compléter cette encyclopédie.
+        Elles ne sont pas des séquences officielles de Naruto ou Boruto.
+    </div>
+
+    <div class="search-box">
+        <input type="search" id="search"
+        placeholder="Rechercher un Fûinjutsu, un mudra...">
+    </div>
+
+    <div class="filters">
+        <button class="active" data-filter="tout">Tout</button>
+        <button data-filter="Scellement">Scellement</button>
+        <button data-filter="Libération">Libération</button>
+        <button data-filter="Emprisonnement">Emprisonnement</button>
+        <button data-filter="Barrière">Barrières</button>
+        <button data-filter="Associé">Techniques associées</button>
+    </div>
+
+    <p class="counter" id="counter"></p>
+
+    <section class="grid" id="grid"></section>
+
+    <div class="empty" id="empty">
+        Aucun Fûinjutsu ne correspond à ta recherche.
+    </div>
+
+    <section class="mudra-section">
+        <h2>Les 12 mudras fondamentaux</h2>
+        <p style="text-align:center;color:#c6b8d8">
+            Les douze signes de main associés aux animaux du zodiaque.
+        </p>
+        <div class="mudra-grid" id="mudraGrid"></div>
+    </section>
+
+</main>
+
+<footer>
+    Encyclopédie des Fûinjutsu — Univers Naruto et Boruto<br>
+    Les séquences inventées sont des créations pour cette encyclopédie.<br><br>
+    Références :
+    <a href="https://naruto.fandom.com/wiki/Hand_Seal"
+       target="_blank" rel="noopener noreferrer">Les mudras</a> |
+    <a href="https://naruto.fandom.com/wiki/Evil_Sealing_Method"
+       target="_blank" rel="noopener noreferrer">Sceau Endigue le Mal</a>
+</footer>
+
+<script>
+const mudras = [
+    {nom:"Rat",japonais:"Ne",signe:"子",animal:"🐀"},
+    {nom:"Bœuf",japonais:"Ushi",signe:"丑",animal:"🐂"},
+    {nom:"Tigre",japonais:"Tora",signe:"寅",animal:"🐅"},
+    {nom:"Lièvre",japonais:"U",signe:"卯",animal:"🐇"},
+    {nom:"Dragon",japonais:"Tatsu",signe:"辰",animal:"🐉"},
+    {nom:"Serpent",japonais:"Mi",signe:"巳",animal:"🐍"},
+    {nom:"Cheval",japonais:"Uma",signe:"午",animal:"🐎"},
+    {nom:"Bélier",japonais:"Hitsuji",signe:"未",animal:"🐏"},
+    {nom:"Singe",japonais:"Saru",signe:"申",animal:"🐒"},
+    {nom:"Oiseau",japonais:"Tori",signe:"酉",animal:"🐓"},
+    {nom:"Chien",japonais:"Inu",signe:"戌",animal:"🐕"},
+    {nom:"Sanglier",japonais:"I",signe:"亥",animal:"🐗"}
+];
+
+const techniques = [
+{
+nom:"Sceau des Quatre Symboles",
+categorie:"Scellement",
+description:"Technique permettant d'enfermer une entité ou une grande quantité de chakra dans un corps ou un réceptacle. Minato l'a utilisé dans le processus de scellement de Kurama dans Naruto.",
+sequence:["Rat","Bœuf","Tigre","Serpent","Dragon","Bélier"],
+type:"inventée"
+},
+{
+nom:"Style de scellement des huit trigrammes",
+categorie:"Scellement",
+description:"Forme de scellement puissante créée par la combinaison de deux Sceaux des Quatre Symboles. C'est le système utilisé pour enfermer Kurama dans Naruto.",
+sequence:["Dragon","Rat","Bélier","Serpent","Tigre","Bœuf","Sanglier","Dragon"],
+type:"inventée"
+},
+{
+nom:"Sceau Torii",
+categorie:"Scellement",
+description:"Sceau utilisé pour maintenir une entité à l'intérieur d'un espace de scellement. Il est notamment associé au contrôle de Kurama dans l'esprit de Naruto.",
+sequence:["Bélier","Dragon","Bœuf","Rat","Chien"],
+type:"inventée"
+},
+{
+nom:"Sceau inversé des Quatre Symboles",
+categorie:"Scellement",
+description:"Technique de scellement inversée associée à Danzô Shimura. Elle libère une force destructrice à partir du corps de son utilisateur.",
+sequence:["Serpent","Tigre","Rat","Dragon","Sanglier","Bélier"],
+type:"inventée"
+},
+{
+nom:"Sceau des Cinq Éléments",
+categorie:"Scellement",
+description:"Sceau qui perturbe le contrôle du chakra en ajoutant une couche de scellement sur un sceau déjà présent. Jiraya l'a utilisé sur Naruto.",
+sequence:["Tigre","Serpent","Bélier","Dragon","Rat"],
+type:"inventée"
+},
+{
+nom:"Destruction du Sceau des Cinq Éléments",
+categorie:"Libération",
+description:"Technique qui annule les effets du Sceau des Cinq Éléments et permet au chakra de circuler de nouveau normalement.",
+sequence:["Rat","Dragon","Serpent","Bélier","Tigre"],
+type:"inventée"
+},
+{
+nom:"Emprisonnement des Morts",
+categorie:"Emprisonnement",
+description:"Technique qui invoque le Dieu de la Mort afin de sceller l'âme d'une cible. Son utilisation entraîne également la mort de l'utilisateur.",
+sequence:["Serpent","Rat","Bélier","Sanglier","Dragon","Chien"],
+type:"inventée"
+},
+{
+nom:"Sceau du Contrat",
+categorie:"Scellement",
+description:"Technique permettant de rompre le lien de contrôle entre un utilisateur et une invocation ou une entité invoquée.",
+sequence:["Chien","Rat","Dragon","Serpent","Bélier"],
+type:"inventée"
+},
+{
+nom:"Emprisonnement du Feu",
+categorie:"Scellement",
+description:"Technique permettant de sceller des flammes dans un parchemin. Elle peut servir à conserver des flammes particulièrement difficiles à maîtriser.",
+sequence:["Tigre","Cheval","Serpent","Dragon","Bélier"],
+type:"inventée"
+},
+{
+nom:"Sceau Endigue le Mal",
+categorie:"Scellement",
+description:"Technique qui permet de limiter les effets d'une marque maudite et d'empêcher son activation incontrôlée.",
+sequence:["Lièvre","Serpent","Cheval","Bélier","Oiseau","Tigre","Lièvre","Serpent","Cheval","Bélier","Oiseau","Tigre","Lièvre","Serpent","Cheval","Bélier","Oiseau","Chien","Rat"],
+type:"officielle"
+},
+{
+nom:"Sceau des Neuf Dragons Illusoires",
+categorie:"Emprisonnement",
+description:"Technique utilisée par plusieurs membres de l'Akatsuki pour extraire et sceller le chakra d'un démon à queues dans la statue du Démon des Enfers.",
+sequence:["Dragon","Serpent","Rat","Bélier","Sanglier","Tigre","Dragon"],
+type:"inventée"
+},
+{
+nom:"Sceau des Trois Directions",
+categorie:"Emprisonnement",
+description:"Technique qui crée une structure de scellement triangulaire autour d'une cible afin de l'emprisonner.",
+sequence:["Rat","Tigre","Dragon","Bélier","Chien"],
+type:"inventée"
+},
+{
+nom:"Technique de Scellement : Libération",
+categorie:"Libération",
+description:"Technique permettant d'annuler un Fûinjutsu qui retient son utilisateur. Konohamaru l'emploie dans Boruto.",
+sequence:["Bélier","Rat","Serpent","Dragon"],
+type:"inventée"
+},
+{
+nom:"Sceau d'Armure de Fer",
+categorie:"Scellement",
+description:"Sceau utilisé pour maintenir le chakra d'un démon à queues à l'intérieur de son hôte. Il est associé au scellement de Gyûki dans Killer B.",
+sequence:["Bœuf","Dragon","Serpent","Tigre","Bélier"],
+type:"inventée"
+},
+{
+nom:"Sceau de scellement des Six Voies",
+categorie:"Scellement",
+description:"Pouvoir de scellement lié aux Six Voies, utilisé par Naruto et Sasuke pour emprisonner Kaguya Ôtsutsuki.",
+sequence:["Dragon","Bélier","Rat","Tigre","Serpent","Dragon"],
+type:"inventée"
+},
+{
+nom:"Formation des Quatre Brouillards Noirs",
+categorie:"Barrière",
+description:"Barrière utilisée autour d'un récipient pour protéger une personne pendant le processus d'évolution de sa marque maudite.",
+sequence:["Sanglier","Serpent","Bélier","Rat","Dragon"],
+type:"inventée"
+},
+{
+nom:"Cube de Flammes Pourpres",
+categorie:"Barrière",
+description:"Barrière créée par quatre ninjas qui forment un carré. Elle protège la zone enfermée et repousse les intrusions.",
+sequence:["Tigre","Dragon","Cheval","Bélier","Serpent"],
+type:"inventée"
+},
+{
+nom:"Cube aux Faces Écarlates",
+categorie:"Barrière",
+description:"Barrière puissante créée par quatre ninjas expérimentés. Elle est utilisée pour protéger une zone contre des attaques très puissantes.",
+sequence:["Dragon","Tigre","Bélier","Serpent","Rat","Cheval"],
+type:"inventée"
+},
+{
+nom:"Apposition des Sceaux Maléfiques",
+categorie:"Associé",
+description:"Technique employée pour accompagner le processus d'évolution d'une marque maudite. Elle est associée au rituel des Quatre du Son.",
+sequence:["Serpent","Bélier","Sanglier","Tigre","Rat"],
+type:"inventée"
+},
+{
+nom:"Sceau des Cent",
+categorie:"Associé",
+description:"Sceau qui permet de stocker une grande quantité de chakra. Il est reconnaissable à la marque en forme de losange sur le front de Tsunade et de Sakura.",
+sequence:["Rat","Dragon","Bélier","Serpent","Tigre","Dragon"],
+type:"inventée"
+},
+{
+nom:"Création et Renouveau",
+categorie:"Associé",
+description:"Technique médicale qui utilise le chakra accumulé dans le Sceau des Cent pour accélérer la régénération du corps.",
+sequence:["Bélier","Serpent","Rat","Dragon","Bélier"],
+type:"inventée"
+},
+{
+nom:"Marque Maudite du Ciel",
+categorie:"Associé",
+description:"Marque créée par Orochimaru qui donne accès à une transformation et à une augmentation des capacités de son porteur.",
+sequence:["Serpent","Tigre","Sanglier","Dragon","Bélier"],
+type:"inventée"
+},
+{
+nom:"Marque Maudite de la Terre",
+categorie:"Associé",
+description:"Variante de la marque maudite d'Orochimaru, apposée sur certains de ses sujets.",
+sequence:["Dragon","Serpent","Bélier","Tigre","Sanglier"],
+type:"inventée"
+},
+{
+nom:"Karma de Boruto",
+categorie:"Associé",
+description:"Marque liée aux pouvoirs des Ôtsutsuki. Elle permet notamment de transmettre des informations et des capacités à son porteur.",
+sequence:["Dragon","Rat","Serpent","Bélier","Tigre"],
+type:"inventée"
+},
+{
+nom:"Karma de Kawaki",
+categorie:"Associé",
+description:"Marque implantée par Isshiki Ôtsutsuki. Elle donne accès à des capacités particulières liées à son empreinte.",
+sequence:["Tigre","Dragon","Rat","Serpent","Bélier"],
+type:"inventée"
+}
+];
+
+const grid=document.getElementById("grid");
+const search=document.getElementById("search");
+const counter=document.getElementById("counter");
+const empty=document.getElementById("empty");
+const buttons=document.querySelectorAll(".filters button");
+const mudraGrid=document.getElementById("mudraGrid");
+
+let selectedCategory="tout";
+
+function afficherMudras(){
+    mudraGrid.innerHTML=mudras.map(m=>`
+        <div class="mudra">
+            <div class="symbol">${m.animal}</div>
+            <b>${m.nom}</b>
+            <small>${m.japonais} — ${m.signe}</small>
+        </div>
+    `).join("");
+}
+
+function afficherTechniques(){
+    grid.innerHTML=techniques.map((t,index)=>{
+        const sequence=t.sequence.map(nom=>
+            `<span class="seal">${nom}</span>`
+        ).join("");
+
+        const typeLabel = "";
+const typeClass = "";
+
+        return `
+        <article class="card"
+            data-category="${t.categorie}"
+            data-search="${(t.nom+" "+t.description+" "+t.sequence.join(" ")).toLowerCase()}">
+
+            <span class="category">${t.categorie}</span>
+            <h2>${t.nom}</h2>
+            <p>${t.description}</p>
+
+            <div class="sequence-title">Séquence de mudras :</div>
+            <div class="sequence">${sequence}</div>
+        </article>`;
+    }).join("");
+
+    filtrer();
+}
+
+function normaliser(texte){
+    return texte.toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g,"");
+}
+
+function filtrer(){
+    const recherche=normaliser(search.value.trim());
+    const cards=grid.querySelectorAll(".card");
+    let visible=0;
+
+    cards.forEach(card=>{
+        const categorie=card.dataset.category;
+        const contenu=normaliser(card.dataset.search+" "+card.innerText);
+
+        const correspondRecherche=contenu.includes(recherche);
+        const correspondCategorie=
+            selectedCategory==="tout" ||
+            categorie===selectedCategory;
+
+        const afficher=correspondRecherche && correspondCategorie;
+
+        card.style.display=afficher ? "" : "none";
+        if(afficher) visible++;
+    });
+
+    counter.textContent=
+        visible+" technique(s) affichée(s) sur "+techniques.length;
+
+    empty.style.display=visible===0 ? "block" : "none";
+}
+
+search.addEventListener("input",filtrer);
+
+buttons.forEach(button=>{
+    button.addEventListener("click",()=>{
+        buttons.forEach(b=>b.classList.remove("active"));
+        button.classList.add("active");
+        selectedCategory=button.dataset.filter;
+        filtrer();
+    });
+});
+
+afficherMudras();
+afficherTechniques();
+</script>
+
+</body>
+</html>
